@@ -16,43 +16,44 @@ function getFiles(options) {
 
     walker(options.path, options.extension, function(error, result) {
 
-        if (error) {
-            throw error;
-        }
+        if (!error) {
+            var data = {
+                title: options.title,
+                list: []
+            };
+            var len = result.length;
 
-        var data = {
-            title: options.title,
-            list: []
-        };
-        var len = result.length;
-
-        Promise.prototype.thenReturn = function(value) {
-            return this.then(function() {
-                return value;
-            });
-        };
-
-        function readFile(filePath) {
-            return new Promise(function(resolve) {
-                getTitle(filePath, options.path, function(title) {
-                    data.list.push(title);
-                    resolve();
+            Promise.prototype.thenReturn = function (value) {
+                return this.then(function () {
+                    return value;
                 });
+            };
+
+            function readFile(filePath) {
+                return new Promise(function (resolve) {
+                    getTitle(filePath, options.path, function (title) {
+                        data.list.push(title);
+                        resolve();
+                    });
+                });
+            }
+
+            Promise.resolve(0).then(function loop(i) {
+                if (i < len) {
+                    return readFile(result[i])
+                        .thenReturn(i + 1)
+                        .then(loop);
+                }
+            }).then(function () {
+                writeResultFile(options, data);
+                console.log('done');
+            }).catch(function (error) {
+                console.log('error', error);
             });
         }
-
-        Promise.resolve(0).then(function loop(i) {
-            if (i < len) {
-                return readFile(result[i])
-                    .thenReturn(i + 1)
-                    .then(loop);
-            }
-        }).then(function() {
-            writeResultFile(options, data);
-            console.log('done');
-        }).catch(function(error) {
-            console.log('error', error);
-        });
+        else{
+            console.log(error);
+        }
 
     });
 }
