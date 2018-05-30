@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "gulp-project-map",
+        "scope": null,
+        "escapedName": "gulp-project-map",
+        "name": "gulp-project-map",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Projects\\mercury-git"
+    ]
+  ],
+  "_from": "gulp-project-map@latest",
+  "_id": "gulp-project-map@1.1.1",
+  "_inCache": true,
+  "_location": "/gulp-project-map",
+  "_nodeVersion": "5.1.0",
+  "_npmOperationalInternal": {
+    "host": "packages-9-west.internal.npmjs.com",
+    "tmp": "tmp/gulp-project-map-1.1.1.tgz_1455005373341_0.2916156416758895"
+  },
+  "_npmUser": {
+    "name": "gladkih",
+    "email": "mail@gladkih.su"
+  },
+  "_npmVersion": "3.7.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "gulp-project-map",
+    "scope": null,
+    "escapedName": "gulp-project-map",
+    "name": "gulp-project-map",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/gulp-project-map/-/gulp-project-map-1.1.1.tgz",
+  "_shasum": "375982b97c05eff043c5577358fdaa365a21e856",
+  "_shrinkwrap": null,
+  "_spec": "gulp-project-map",
+  "_where": "C:\\Projects\\mercury-git",
+  "author": {
+    "name": "Maxim Gladkih"
+  },
+  "bugs": {
+    "url": "https://github.com/gladkih/gulp-project-map/issues"
+  },
+  "dependencies": {},
+  "description": "List project html files.",
+  "devDependencies": {
+    "cheerio": "^0.20.0",
+    "extend": "^3.0.0",
+    "jade": "^1.11.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "375982b97c05eff043c5577358fdaa365a21e856",
+    "tarball": "https://registry.npmjs.org/gulp-project-map/-/gulp-project-map-1.1.1.tgz"
+  },
+  "gitHead": "2dabed2d4c1b4ba179b591486a678a4226c41917",
+  "homepage": "https://github.com/gladkih/gulp-project-map#readme",
+  "keywords": [
+    "gulp",
+    "sitemap"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "gladkih",
+      "email": "mail@gladkih.su"
+    }
+  ],
+  "name": "gulp-project-map",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gladkih/gulp-project-map.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.1"
+}
