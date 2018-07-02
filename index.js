@@ -99,7 +99,9 @@ function walker(directory, extension, callback) {
                     });
                 } else {
                     if (path.extname(file) === extension) {
-                        results.push(file);
+                        if(file.indexOf('-ajax') == -1) {
+                            results.push(file);
+                        }
                     }
                     next();
                 }
