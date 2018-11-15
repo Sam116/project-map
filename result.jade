@@ -10,7 +10,28 @@ html(class="no-js", lang="ru")
         meta(http-equiv='pragma', content='no-cache')
         title= data.title
         meta(name='description', content='')
-        link(rel='stylesheet', href='css/styles.css')
+        style(type='text/css').
+            .site-map {
+                list-style: none;
+                padding: 40px;
+                margin: 0;
+            }
+            .site-map li {
+                font-size: 16px;
+                padding-bottom: 10px;
+            }
+            .site-map a {
+                text-decoration: none;
+                color: #111;
+                margin-left: 20px;
+                border-bottom: 1px solid #111;
+                white-space: nowrap;
+                transition: all 0.3s ease-in-out;
+            }
+            .site-map a:hover {
+                border-bottom-color: #d9bc70;
+                color: #d9bc70;
+            }
     body
         ul(class="site-map")
             each item in data.list
