@@ -2,60 +2,60 @@
 
 var fs = require('fs');
 var extend = require('extend');
-var jade = require('jade');
+var pug = require('pug');
 var path = require('path');
 var cheerio = require('cheerio');
 
 function getFiles(options) {
-    options = extend({
-        path: './',
-        extension: '.html',
-        name: 'result',
-        title: 'project-map'
-    }, options);
+  options = extend({
+    path: './',
+    extension: '.html',
+    name: 'result',
+    title: 'project-map'
+  }, options);
 
-    walker(options.path, options.extension, function(error, result) {
+  walker(options.path, options.extension, function(error, result) {
 
-        if (!error) {
-            var data = {
-                title: options.title,
-                list: []
-            };
-            var len = result.length;
+    if (!error) {
+      var data = {
+        title: options.title,
+        list: []
+      };
+      var len = result.length;
 
-            Promise.prototype.thenReturn = function (value) {
-                return this.then(function () {
-                    return value;
-                });
-            };
+      Promise.prototype.thenReturn = function (value) {
+        return this.then(function () {
+          return value;
+        });
+      };
 
-            function readFile(filePath) {
-                return new Promise(function (resolve) {
-                    getTitle(filePath, options.path, function (title) {
-                        data.list.push(title);
-                        resolve();
-                    });
-                });
-            }
+      function readFile(filePath) {
+        return new Promise(function (resolve) {
+          getTitle(filePath, options.path, function (title) {
+            data.list.push(title);
+            resolve();
+          });
+        });
+      }
 
-            Promise.resolve(0).then(function loop(i) {
-                if (i < len) {
-                    return readFile(result[i])
-                        .thenReturn(i + 1)
-                        .then(loop);
-                }
-            }).then(function () {
-                writeResultFile(options, data);
-                console.log('done');
-            }).catch(function (error) {
-                console.log('error', error);
-            });
+      Promise.resolve(0).then(function loop(i) {
+        if (i < len) {
+          return readFile(result[i])
+            .thenReturn(i + 1)
+            .then(loop);
         }
-        else{
-            console.log(error);
-        }
+      }).then(function () {
+        writeResultFile(options, data);
+        console.log('done');
+      }).catch(function (error) {
+        console.log('error', error);
+      });
+    }
+    else{
+      console.log(error);
+    }
 
-    });
+  });
 }
 
 /**
@@ -64,50 +64,46 @@ function getFiles(options) {
  * @param data
  */
 function writeResultFile(options, data) {
-    jade.renderFile(__dirname + '/result.jade', {pretty: true, data: data}, function(error, html) {
-        if (error) {
-            console.log('error:\n' + error);
-        }
 
-        fs.writeFile(options.path + '/' + options.name + '.html', html, function(err) {
-            if (err) {
-                return console.log(err);
-            }
-        });
-    });
+  var html = pug.renderFile(__dirname + '/result.pug',  {pretty: true, data: data});
+  fs.writeFile(options.path + '/' + options.name + '.html', html, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+  });
 }
 
 function walker(directory, extension, callback) {
-    var results = [];
-    fs.readdir(directory, function(error, list) {
-        if (error) {
-            return callback(error);
-        }
-        var i = 0;
-        (function next() {
-            var file = list[i];
-            i += 1;
-            if (!file) {
-                return callback(null, results);
+  var results = [];
+  fs.readdir(directory, function(error, list) {
+    if (error) {
+      return callback(error);
+    }
+    var i = 0;
+    (function next() {
+      var file = list[i];
+      i += 1;
+      if (!file) {
+        return callback(null, results);
+      }
+      file = directory + '/' + file;
+      fs.stat(file, function(error, stat) {
+        if (stat && stat.isDirectory()) {
+          walker(file, extension, function(error, res) {
+            results = results.concat(res);
+            next();
+          });
+        } else {
+          if (path.extname(file) === extension) {
+            if(file.indexOf('-ajax') == -1) {
+              results.push(file);
             }
-            file = directory + '/' + file;
-            fs.stat(file, function(error, stat) {
-                if (stat && stat.isDirectory()) {
-                    walker(file, extension, function(error, res) {
-                        results = results.concat(res);
-                        next();
-                    });
-                } else {
-                    if (path.extname(file) === extension) {
-                        if(file.indexOf('-ajax') == -1) {
-                            results.push(file);
-                        }
-                    }
-                    next();
-                }
-            });
-        })();
-    });
+          }
+          next();
+        }
+      });
+    })();
+  });
 }
 
 /**
@@ -117,23 +113,23 @@ function walker(directory, extension, callback) {
  * @param callback
  */
 function getTitle(url, removePath, callback) {
-    callback = callback ? callback : function() {
+  callback = callback ? callback : function() {
+  };
+  fs.readFile(url, 'utf8', function(error, data) {
+    url = url.replace(removePath + '/', '');
+    var _fileInfo = {
+      title: url,
+      link: url
     };
-    fs.readFile(url, 'utf8', function(error, data) {
-        url = url.replace(removePath + '/', '');
-        var _fileInfo = {
-            title: url,
-            link: url
-        };
-        if (error) {
-            callback(_fileInfo);
-        }
-        var $ = cheerio.load(data);
-        var _title = $('h1');
+    if (error) {
+      callback(_fileInfo);
+    }
+    var $ = cheerio.load(data);
+    var _title = $('h1');
 
-        _fileInfo.title = _title.text() || url;
-        callback(_fileInfo);
-    });
+    _fileInfo.title = _title.text() || url;
+    callback(_fileInfo);
+  });
 }
 
 module.exports = getFiles;
