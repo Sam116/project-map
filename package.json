@@ -1,6 +1,6 @@
 {
   "name": "gulp-project-map",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "List project html files.",
   "main": "index.js",
   "scripts": {
@@ -8,18 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gladkih/gulp-project-map.git"
+    "url": "git+https://github.com/Sam116/project-map.git"
   },
   "keywords": [
     "gulp",
     "sitemap"
   ],
-  "author": "Maxim Gladkih",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gladkih/gulp-project-map/issues"
-  },
-  "homepage": "https://github.com/gladkih/gulp-project-map#readme",
   "devDependencies": {
     "cheerio": "^0.20.0",
     "extend": "^3.0.0",
