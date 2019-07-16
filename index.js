@@ -11,7 +11,7 @@ function getFiles(options) {
     path: './',
     extension: '.html',
     name: 'result',
-    title: 'project-map'
+    title: 'index'
   }, options);
 
   walker(options.path, options.extension, function(error, result) {
